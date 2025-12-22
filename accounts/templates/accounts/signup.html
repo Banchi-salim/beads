@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - BeadsByUmukulthum{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="text-center mb-4">Create Account</h2>
+        <p class="text-center text-muted mb-4">Join our community today</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password1" name="password1" required>
+            </div>
+            <div class="mb-3">
+                <label for="password2" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="password2" name="password2" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
+        </form>
+
+        <p class="text-center">
+            Already have an account? <a href="{% url 'accounts:login' %}">Login here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

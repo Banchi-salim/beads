@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+    <div class="container">
+        <h1 class="hero-title fade-in">Handcrafted Bead Jewelry</h1>
+        <p class="lead mb-4 fade-in">Unique necklaces, earrings, and bracelets created with passion and precision</p>
+        <a href="{% url 'products:product_list' %}" class="btn btn-primary btn-lg me-2 fade-in">Shop Collection</a>
+        <a href="#about" class="btn btn-outline-light btn-lg fade-in">My Story</a>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" class="profile-img" alt="Umukulthum Haruna Abubakar">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="section-title text-start">About Me</h2>
+                <h3 class="mb-3">Umukulthum Haruna Abubakar</h3>
+                <p class="mb-4">Welcome to my world of bead jewelry! I specialize in creating beautiful, handcrafted necklaces, earrings, and bracelets that tell a story.</p>
+                <p class="mb-4">With over 8 years of experience, I combine traditional techniques with contemporary designs to create pieces that are both timeless and modern.</p>
+                <p class="mb-4">Each piece is meticulously crafted by hand, ensuring quality and uniqueness you won't find anywhere else.</p>
+                <div class="d-flex">
+                    <a href="#contact" class="btn btn-primary me-3">Commission Work</a>
+                    <a href="#process" class="btn btn-outline-primary">My Process</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="row">
+            {% for product in featured_products %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card product-card">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400x250?text={{ product.name }}" class="card-img-top product-img" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="product-price">₦{{ product.price }}</span>
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center">No products available yet. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'products:product_list' %}" class="btn btn-primary">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section id="process" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">My Creative Process</h2>
+        <p class="text-center mb-5">Each piece goes through a meticulous creation process</p>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Concept & Design</h4>
+                    <p>I sketch designs and select color palettes that tell a story or evoke an emotion.</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4>Material Selection</h4>
+                    <p>I carefully choose beads, threads, and findings that match the design vision.</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <h4>Handcrafting</h4>
+                    <p>Each piece is meticulously assembled by hand, with attention to every detail.</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="process-step">
+                    <div class="process-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h4>Quality Check</h4>
+                    <p>Every finished piece undergoes rigorous inspection before it's ready for you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Customer Reviews</h2>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="rating mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="testimonial-text">"The necklace I purchased is even more beautiful in person. The craftsmanship is exceptional and I've received so many compliments!"</p>
+                    <p class="testimonial-author">- Chidinma O.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="rating mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star-half-alt text-warning"></i>
+                    </div>
+                    <p class="testimonial-text">"I commissioned a custom piece for my wedding and it was absolutely perfect! Umukulthum understood exactly what I wanted."</p>
+                    <p class="testimonial-author">- Amina B.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="rating mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                    </div>
+                    <p class="testimonial-text">"The earrings I ordered were the perfect gift for my sister. She absolutely loved them! Fast shipping and beautiful packaging."</p>
+                    <p class="testimonial-author">- Funke A.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="text-center mb-5">Interested in a custom order or have questions? I'd love to hear from you!</p>
+
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <form method="post" id="contact-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" name="name" id="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <select class="form-control" name="subject" id="subject" required>
+                                    <option value="">Select a subject</option>
+                                    <option value="custom-order">Custom Order Inquiry</option>
+                                    <option value="existing-product">Question About a Product</option>
+                                    <option value="shipping">Shipping Information</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" name="message" id="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                </div>
+                <h5>Location</h5>
+                <p>Based in Sokoto, Nigeria</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-envelope fa-2x text-primary"></i>
+                </div>
+                <h5>Email</h5>
+                <p>haidarharuna90@gmail.com</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-phone fa-2x text-primary"></i>
+                </div>
+                <h5>Phone/WhatsApp</h5>
+                <p>+234 08036076783</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if(targetId === '#') return;
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+</script>
+{% endblock %}
