@@ -145,5 +145,5 @@ SESSION_COOKIE_AGE = 86400  # 24 hours
 
 # Paystack API settings
 # Replace these with your actual Paystack keys from https://dashboard.paystack.com/#/settings/developer
-PAYSTACK_PUBLIC_KEY = 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx'  # Replace with your public key
-PAYSTACK_SECRET_KEY = 'sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx'  # Replace with your secret key
+PAYSTACK_PUBLIC_KEY = 'pk_test_321ace6bcec1d715b1cae1d003bca97f40ffdfdd'
+PAYSTACK_SECRET_KEY = 'sk_test_89dba4be790e68bc502aaab57bcbae99a5fbed74'
